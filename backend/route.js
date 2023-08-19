@@ -1,14 +1,72 @@
 const express = require('express');
 const router = express.Router();
 const axios = require("axios");
-
+const cors = require('cors');
+router.use(cors ({
+    origin:'*'
+  }))
+  
 router.get('/testing',(req,res)=>{
     res.json({"status":"I am testing"});
 })
 
-
+const url =""
 
  
+router.get('/trainid/:id',async(req,res)=>{
+    
+       const id = req.params.id
+
+    //const {id} = req.body;
+ data=[]
+ const body = {
+  "companyName": "Train Central",
+  "clientID": "941895f2-563c-4e6e-9d5d-9eb33998c03f",
+  "clientSecret": "ZnfHRhEbbvlLkCbv",
+  "ownerName": "akhilmujam",
+  "ownerEmail": "akhilmujam@gmail.com",
+  "rollNo": "20B81A6704"
+}
+var accessToken;
+const tokendata = await axios.post("http://20.244.56.144/train/auth",body).then((res)=>{
+  console.log("in",res.data.access_token);
+  accessToken = res.data.access_token;
+})
+ const ax = axios.create({
+  baseURL: 'http://20.244.56.144/train/trains', 
+  headers: {
+    'Authorization': `Bearer ${accessToken}` 
+  }
+});
+
+
+       ax.get("http://20.244.56.144/train/trains").then(
+        data=>{
+
+             for(var i=0;i<data.data.length;i++)
+             {
+                if(id===data.data[i].trainNumber)
+
+                {
+                    data.push(data.data[i])
+                }
+             }
+             console.log(data)
+            
+        }
+        
+    )
+
+    
+
+
+
+    res.send(data);
+})
+
+
+
+
 
 router.get('/getAlltrains',async(req,res)=>{
     const body = {
