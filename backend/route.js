@@ -13,58 +13,103 @@ router.get('/testing',(req,res)=>{
 const url =""
 
  
-router.get('/trainid/:id',async(req,res)=>{
+// router.get('/trainid/:id',async(req,res)=>{
     
-       const id = req.params.id
+//        const id = req.params.id
 
-    //const {id} = req.body;
- data=[]
- const body = {
-  "companyName": "Train Central",
-  "clientID": "941895f2-563c-4e6e-9d5d-9eb33998c03f",
-  "clientSecret": "ZnfHRhEbbvlLkCbv",
-  "ownerName": "akhilmujam",
-  "ownerEmail": "akhilmujam@gmail.com",
-  "rollNo": "20B81A6704"
-}
-var accessToken;
-const tokendata = await axios.post("http://20.244.56.144/train/auth",body).then((res)=>{
-  console.log("in",res.data.access_token);
-  accessToken = res.data.access_token;
-})
- const ax = axios.create({
-  baseURL: 'http://20.244.56.144/train/trains', 
-  headers: {
-    'Authorization': `Bearer ${accessToken}` 
+//     //const {id} = req.body;
+//  data=[]
+//  const body = {
+//   "companyName": "Train Central",
+//   "clientID": "941895f2-563c-4e6e-9d5d-9eb33998c03f",
+//   "clientSecret": "ZnfHRhEbbvlLkCbv",
+//   "ownerName": "akhilmujam",
+//   "ownerEmail": "akhilmujam@gmail.com",
+//   "rollNo": "20B81A6704"
+// }
+// var accessToken;
+// const tokendata = await axios.post("http://20.244.56.144/train/auth",body).then((res)=>{
+//  // console.log("in",res.data.access_token);
+//   accessToken = res.data.access_token;
+// })
+//  const ax = axios.create({
+//   baseURL: 'http://20.244.56.144/train/trains', 
+//   headers: {
+//     'Authorization': `Bearer ${accessToken}` 
+//   }
+// });
+
+
+// ax.get("http://20.244.56.144/train/trains").then(
+//   data=>{
+
+//     tdata=data.data;
+//     console.log(tdata);
+//     for(var i=0;i<tdata.length;i++)
+//     {
+//         if(tdata[i].trainNumber == trainNo)
+//         {
+//             res.send(tdata[i]);
+//         }
+//     }
+//   }
+//  ).catch((res)=>{
+//     console.log(res);
+//  })
+
+
+    
+
+
+
+//    // res.send(data);
+// })
+
+
+router.get('/train/:num',async(req,res)=>{
+  const trainNo = req.params.num;
+  console.log(trainNo);
+  const body = {
+      "companyName":"Train Central",
+      "clientID":"f4d6c86b-9e64-48f0-ad62-3341300df2d6",
+      "ownerName":"saiteja",
+      "ownerEmail":"saiteja6734.yelagandula@gmail.com",
+      "rollNo":"20B81A6734",
+      "clientSecret":"xeUBrVfdwUzWHRih"
   }
-});
-
-
-       ax.get("http://20.244.56.144/train/trains").then(
-        data=>{
-
-             for(var i=0;i<data.data.length;i++)
-             {
-                if(id===data.data[i].trainNumber)
-
-                {
-                    data.push(data.data[i])
-                }
-             }
-             console.log(data)
-            
-        }
-        
-    )
+  var accessToken;
+  const tokendata = await axios.post("http://20.244.56.144/train/auth",body).then((res)=>{
+      console.log("in",res.data.access_token);
+      accessToken = res.data.access_token;
+  })
+  const ax = axios.create({
+      baseURL: 'http://20.244.56.144/train/trains', 
+      headers: {
+        'Authorization': `Bearer ${accessToken}` 
+      }
+    });
 
     
+           ax.get("http://20.244.56.144/train/trains").then(
+            data=>{
 
+              tdata=data.data;
+              console.log(tdata);
+              for(var i=0;i<tdata.length;i++)
+              {
+                  if(tdata[i].trainNumber == trainNo)
+                  {
+                      res.send(tdata[i]);
+                  }
+              }
+            }
+           ).catch((res)=>{
+              console.log(res);
+           })
 
-
-    res.send(data);
 })
 
-
+module.exports = router;
 
 
 
