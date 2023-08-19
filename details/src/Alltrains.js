@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react';
+import Nav from './Components/Nav';
 import axios from 'axios'
 const Alltrains = () => {
   const [traindata,settraindata] = useState([]);
@@ -11,12 +12,13 @@ const Alltrains = () => {
   },[])
   return (
     <div>
+        <Nav/>
         <center><p className="text-4xl text-green-900">Train Data Get Access to all Trains</p></center>
         <div className="container mx-auto mt-7 px-4   py-8 ">
         <table className="w-full text-sm text-center shadow ring-1 ring-black ring-opacity-5 text-gray-900 divide-y divide-gray-300 md:rounded-lg">
           <thead className="text-xs text-center  text-gray-900 uppercase bg-gray-50">
             <tr>
-              <th className="px-6 py-3  text-sm font-semibold text-gray-900 text-center ">
+              <th className="px-6 py-3  text-sm font-semibold text-gray-900 text-center">
                 Train No
               </th>
               <th className="px-6 py-3 text-center text-sm font-semibold text-gray-900 ">
